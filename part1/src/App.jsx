@@ -1,63 +1,91 @@
-const Header = ({props}) => {
+// import { useState } from "react"
 
-  return (
-      <div>
-          <h1>{props.course}</h1>
-          <p>
-              {props.parts[0].name} {props.parts[0].exercises}
-          </p>
-      </div>
-  )
-}
+// const App = () => {
+//     const anecdotes = [
+//         'If it hurts, do it more often.',
+//         'Adding manpower to a late software project makes it later!',
+//         'The first 90 percent of the code accounts for the first 10 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+//         'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+//         'Premature optimization is the root of all evil.',
+//         'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
+//         'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
+//         'The only way to go fast, is to go well.'
+//     ]
+    
+//     const [selected, setSelected] = useState(0)
+//     const [puntaje,setPuntaje]=useState({0:0,1:0,2:0,3:0, 4:0,5:0,6:0,7:0})
 
-const Content = ({parts}) => {
+//     const aleatorio = () => {
+//         // Genera un número aleatorio dentro del rango de índices del array.
+//         const randomIndex = Math.floor(Math.random() * anecdotes.length);
+//         setSelected(randomIndex);
+//     };
 
-  return (
-      <div>
-          <h1>{parts[1].name}</h1>
-          <p>
-              {parts[1].name} {parts[1].exercises}
-          </p>
-      </div>
-  )
-}
-const Total=({parts})=>{
-  const exercisesTotal = parts.reduce((total, part) => total + part.exercises, 0)
-  return(
-    <>
-    <p>
-        {parts[2].name} {parts[2].exercises}
-      </p>
-      <p>Number of exercises{exercisesTotal}</p> 
-    </>
-  )
-}
+    
+
+//     const Voto=()=>{
+//         const copia={...puntaje}
+//         copia[selected] + 1
+//         setPuntaje(copia)
+//         console.log(copia)
+//     }
+
+//         return (
+//             <>
+//                 <p>{anecdotes[selected]}</p>
+//                 <button onClick={aleatorio}>Next Anecdote</button>
+//                 <button onClick={Voto}>Vote</button>
+//             </>
+//         );
+
+
+
+
+
+// }
+
+// export default App
+
+import React, { useState } from 'react';
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
-  return (
-    <>
-      <Header props={course}/>
-      <Content parts={course.parts}/>
-      <Total parts={course.parts}/>
-    </>
-  )
+    const anecdotes = [
+        'If it hurts, do it more often.',
+        'Adding manpower to a late software project makes it later!',
+        'The first 90 percent of the code accounts for the first 10 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+        'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+        'Premature optimization is the root of all evil.',
+        'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
+        'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
+        'The only way to go fast, is to go well.'
+    ];
+    
+    const [selected, setSelected] = useState(0);
+    const [puntaje, setPuntaje] = useState({0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0});
+
+    const aleatorio = () => {
+        const randomIndex = Math.floor(Math.random() * anecdotes.length);
+        setSelected(randomIndex);
+    };
+
+    const Voto = () => {
+        const copia = { ...puntaje };
+        copia[selected] += 1;
+        setPuntaje(copia);
+    };
+    
+    const maxKey = Object.keys(puntaje).reduce((a, b) => puntaje[a] > puntaje[b] ? a : b);
+    const anecdotesMax=anecdotes[maxKey]
+
+    return (
+        <>
+            <p>{anecdotes[selected]}</p>
+            <p>has {puntaje[selected]} votes</p>
+            <button onClick={aleatorio}>Next Anecdote</button>
+            <button onClick={Voto}>Vote</button>
+            <p>Es la anecdota más votada = "{anecdotesMax}" </p>
+        </>
+    );
 }
 
-export default App
+export default App;
